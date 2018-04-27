@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>
+        chatApp
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.js" integrity="sha256-5i/mQ300M779N2OVDrl16lbohwXNUdzL/R2aVUXyXWA=" crossorigin="anonymous"></script>
+</head>
+
+<body id="top">
+    <div class="chatArea">
+        <ul id="messages"></ul>
+    </div>
+    <form action="">
+        <!-- <p><%= user %></p> -->
+        <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script>
+        const socket = io();
+        socket.on('connect',function(){
+            socket.emit('login',{
+                name:'<%= user %>',
+            })
+        });
+        $(window).on('beforeunload', function() {
+            socket.emit('logout',{
+                name:'<%= user %>',
+            })
+        });
+        $('form').submit(() => {
+            socket.emit('chat message', {
+                message :$('#m').val(),
+                name :'<%= user %>',
+                mail :'<%= mail %>'
+            });
+            $('#m').val('');
+            return false;
+        });
+        socket.on('chat message', (data) => {
+            $('#messages').append(`
+                <li>
+                    <p class="username">${data.username}<span class="time">${data.time}</span></p>
+                    <p class="msg">${data.message}</p>
+                </li>
+            `);
+        });
+        socket.on('login', (data) => {
+            console.log(data.name)
+            $('#messages').append(`
+                <li class="login">
+                    <p class="msg">${data.username}が入室しました。</p>
+                </li>
+            `);
+        });
+        socket.on('logout', (data) => {
+            console.log(data.name)
+            $('#messages').append(`
+                <li class="logout">
+                    <p class="msg">${data.username}が退室しました。</p>
+                </li>
+            `);
+        });
+    </script>
+</body>
+
+</html>

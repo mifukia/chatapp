@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+form {
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include sp{
+        width: 95%;
+    };
+}
+
+form input {
+    border: 0;
+    padding: 1em;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 5%;
+    @include sp{
+        border-radius: 10px;
+    };
+}
+
+form button {
+    width: 80%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    @include sp{
+        border-radius: 10px;
+    };
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#messages li {
+    padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+    background: #eee;
+}
