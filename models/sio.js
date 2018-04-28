@@ -29,10 +29,10 @@ function sio(server) {
         socket.on('inv', (data) => {
             console.log(data.address);
             sendmail({
-                from: 'mifukiahelp@gmail.com',
+                from: 'simchat_for@yahoo.co.jp',
                 to: data.address,
                 subject: 'simchatからメッセージが送信されました',
-                text: `https://chatappsim.herokuapp.com/login`
+                text: `https://simchat-for-is.herokuapp.com/login`
             }, function(err, reply) {
                 console.log(err && err.stack);
                 console.dir(reply);
