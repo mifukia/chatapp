@@ -4,9 +4,9 @@ body {
     font: 13px Helvetica, Arial;
 }
 
-form {
+.msgForm {
     background: #888;
-    padding: 2%;
+    padding: 10px;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -15,26 +15,20 @@ form {
 }
 
 
-form input {
+.msgForm input {
     border: 0;
     padding: 1em;
     width: 80%;
     background: #fff;
-    border-radius: 30px;
+    border-radius: .3rem;
     font-size: 16px;
     @include sp{
         width: 70%;
     };
 }
 
-form button {
+.msgForm button {
     width: 15%;
-    background: rgb(130, 224, 255);
-    border: none;
-    padding: 1em;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 16px;
     @include sp{
         width: 25%;
     };
@@ -47,7 +41,7 @@ form button {
 }
 
 #messages li {
-    padding: 5px 10px;
+    padding: 10px;
 }
 
 #messages li:nth-child(odd) {
@@ -62,7 +56,13 @@ form button {
     color: #fff !important;
 }
 .chatArea{
-    overflow-y: scroll;
+    height: calc(100vh - 128px);
+    padding-top: 55px;
+    padding-bottom: 73px;
+    overflow-y: auto;
+    @include pc{
+        box-sizing: content-box;
+    }
 }
 .username{
     font-size: 13px;
@@ -77,4 +77,23 @@ form button {
 .msg{
     font-size: 20px;
     margin-top: 0.5em;
+}
+header{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    background: #888;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 99;
+}
+.invBtn{
+    margin-left: 10px;
+}
+.logoutBtn{
+    a{
+        color: #fff;
+    }
 }

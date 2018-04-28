@@ -25,14 +25,17 @@ function sio(server) {
               message: data.message,
               time : dateformat(new Date(), 'yyyy-mm-dd HH:MM:ss'),
             });
+        });
+        socket.on('inv', (data) => {
+            console.log(data.address);
             sendmail({
-              from: 'mifukiahelp@gmail.com',
-              to: data.mail,
-              subject: 'simchatからメッセージが送信されました',
-              text: `ユーザー：${data.name}　メッセージ：${data.message}　https://chatappsim.herokuapp.com/login`
+                from: 'mifukiahelp@gmail.com',
+                to: data.address,
+                subject: 'simchatからメッセージが送信されました',
+                text: `https://chatappsim.herokuapp.com/login`
             }, function(err, reply) {
-              console.log(err && err.stack);
-              console.dir(reply);
+                console.log(err && err.stack);
+                console.dir(reply);
             });
         });
     });

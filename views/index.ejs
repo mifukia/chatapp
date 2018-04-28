@@ -7,38 +7,82 @@
     <title>
         chatApp
     </title>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.js" integrity="sha256-5i/mQ300M779N2OVDrl16lbohwXNUdzL/R2aVUXyXWA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 
 <body id="top">
+    <header>
+        <button type="button" class="btn btn-danger logoutBtn">
+            <a href="/login">ログアウト</a>
+        </button>
+        <button type="button" class="btn btn-primary invBtn" data-toggle="modal" data-target="#invModal">
+            招待
+        </button>
+    </header>
     <div class="chatArea">
         <ul id="messages"></ul>
     </div>
-    <form action="">
+    <form action="" class="msgForm">
         <!-- <p><%= user %></p> -->
-        <input id="m" autocomplete="off" /><button>Send</button>
+        <input id="m" autocomplete="off" /><button class="btn btn-primary btn-lg">送信</button>
     </form>
+    <!-- モーダル・ダイアログ -->
+    <div class="modal fade" id="invModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">招待を送るメールアドレス</h4>
+                </div>
+                <form action="" class="invForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input id="inv" autocomplete="off" / class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn" data-dismiss="modal">閉じる</button>
+                        <input type="submit" value ="送信" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         const socket = io();
+        var chatScroll = ()=> {
+            $('.chatArea').animate({scrollTop: $('.chatArea').get(0).scrollHeight}, '300');
+        }
+        //login
         socket.on('connect',function(){
             socket.emit('login',{
                 name:'<%= user %>',
             })
         });
+        //logout
         $(window).on('beforeunload', function() {
             socket.emit('logout',{
                 name:'<%= user %>',
             })
         });
-        $('form').submit(() => {
+        $('.msgForm').submit(() => {
             socket.emit('chat message', {
                 message :$('#m').val(),
                 name :'<%= user %>',
                 mail :'<%= mail %>'
             });
             $('#m').val('');
+            return false;
+        });
+        $('.invForm').submit(() => {
+            socket.emit('inv', {
+                address :$('#inv').val(),
+            });
+            $('#inv').val('');
+            $('.closeBtn').trigger('click');
             return false;
         });
         socket.on('chat message', (data) => {
@@ -48,6 +92,7 @@
                     <p class="msg">${data.message}</p>
                 </li>
             `);
+            chatScroll();
         });
         socket.on('login', (data) => {
             console.log(data.name)
@@ -56,6 +101,7 @@
                     <p class="msg">${data.username}が入室しました。</p>
                 </li>
             `);
+            chatScroll();
         });
         socket.on('logout', (data) => {
             console.log(data.name)

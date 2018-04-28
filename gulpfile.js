@@ -14,7 +14,6 @@ gulp.task('browser',['nodemon'],function() {//事前のnodemonによるサーバ
             'public/javascripts/*.js',
             'public/images/*.*'
         ],
-        // browser: "google chrome"//ブラウザ選択
     });
 });
 

@@ -10,11 +10,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    var userName = req.body['username'];
-    var email = req.body['email'];
+    router.userName = req.body['username'];
+    router.email = req.body['email'];
     res.render('index', {
-        user: userName,
-        mail: email
+        user: router.userName,
+        mail: router.email
     });
 });
 

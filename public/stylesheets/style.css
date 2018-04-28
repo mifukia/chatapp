@@ -1572,36 +1572,30 @@ blockquote:before {
 #top body {
   font: 13px Helvetica, Arial; }
 
-#top form {
+#top .msgForm {
   background: #888;
-  padding: 2%;
+  padding: 10px;
   position: fixed;
   bottom: 0;
   width: 100%;
   display: flex;
   justify-content: space-around; }
 
-#top form input {
+#top .msgForm input {
   border: 0;
   padding: 1em;
   width: 80%;
   background: #fff;
-  border-radius: 30px;
+  border-radius: .3rem;
   font-size: 16px; }
   @media print, screen and (max-width: 750px) {
-    #top form input {
+    #top .msgForm input {
       width: 70%; } }
 
-#top form button {
-  width: 15%;
-  background: #82e0ff;
-  border: none;
-  padding: 1em;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 16px; }
+#top .msgForm button {
+  width: 15%; }
   @media print, screen and (max-width: 750px) {
-    #top form button {
+    #top .msgForm button {
       width: 25%; } }
 
 #top #messages {
@@ -1610,7 +1604,7 @@ blockquote:before {
   padding: 0; }
 
 #top #messages li {
-  padding: 5px 10px; }
+  padding: 10px; }
 
 #top #messages li:nth-child(odd) {
   background: #eee; }
@@ -1624,7 +1618,13 @@ blockquote:before {
   color: #fff !important; }
 
 #top .chatArea {
-  overflow-y: scroll; }
+  height: calc(100vh - 128px);
+  padding-top: 55px;
+  padding-bottom: 73px;
+  overflow-y: auto; }
+  @media print, screen and (min-width: 751px) {
+    #top .chatArea {
+      box-sizing: content-box; } }
 
 #top .username {
   font-size: 13px;
@@ -1640,12 +1640,29 @@ blockquote:before {
   font-size: 20px;
   margin-top: 0.5em; }
 
+#top header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #888;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 99; }
+
+#top .invBtn {
+  margin-left: 10px; }
+
+#top .logoutBtn a {
+  color: #fff; }
+
 #login form {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center; }
@@ -1653,29 +1670,11 @@ blockquote:before {
     #login form {
       width: 95%; } }
 
-#login form input {
-  border: 0;
-  padding: 1em;
-  width: 100%;
-  background: #fff;
-  border: 1px solid #888;
-  border-radius: 20px;
-  font-size: 16px;
-  margin-bottom: 5%; }
-  @media print, screen and (max-width: 750px) {
-    #login form input {
-      border-radius: 10px; } }
+#login .form-group {
+  width: 300px; }
 
-#login form button {
-  width: 80%;
-  background: #82e0ff;
-  border: none;
-  padding: 1em;
-  border-radius: 20px;
-  cursor: pointer; }
-  @media print, screen and (max-width: 750px) {
-    #login form button {
-      border-radius: 10px; } }
+#login form input {
+  width: 100%; }
 
 #login #messages {
   list-style-type: none;
